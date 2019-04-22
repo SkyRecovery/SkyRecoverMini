@@ -1,17 +1,22 @@
 {
-    "pages": [
-        "pages/index/index",
-        "pages/about/about",
-        "pages/citychoose/citychoose",
-        "pages/setting/setting",
-        "pages/systeminfo/systeminfo",
-        "pages/share/index"
-    ],
-    "window": {
-        "backgroundTextStyle": "dark",
-        "navigationBarBackgroundColor": "#4FC3F7",
-        "navigationBarTitleText": "OwnerWeather",
-        "navigationBarTextStyle": "light",
-        "navigationStyle": "default"
+  "pages": [
+    "pages/index/index",
+    "pages/about/about",
+    "pages/citychoose/citychoose",
+    "pages/setting/setting",
+    "pages/systeminfo/systeminfo"
+  ],
+  "window": {
+    "backgroundTextStyle": "dark",
+    "navigationBarBackgroundColor": "black",
+    "navigationBarTitleText": "Quiet Weather",
+    "navigationBarTextStyle": "black"
+  },
+  "permission": {
+    "scope.userLocation": {
+      "desc": "定位以获取当前位置天气信息"
     }
+  },
+  "cloud": true,
+  "sitemapLocation": "sitemap.json"
 }

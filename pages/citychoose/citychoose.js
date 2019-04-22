@@ -1,8 +1,50 @@
 let staticData = require('../../data/staticData.js')
+let utils = require('../../utils/utils.js')
 Page({
   data: {
+    alternative: null,
+    cities: [],
+    // 需要显示的城市
+    showItems: null,
+    inputText: '',
     hotCities: [],
-    cities: []
+  },
+  cancel () {
+    this.setData({
+      inputText: '',
+      showItems: this.data.cities,
+    })
+  },
+  inputFilter (e) {
+    let alternative = {}
+    let cities = this.data.cities
+    let value = e.detail.value.replace(/\s+/g, '')
+    if (value.length) {
+      for (let i in cities) {
+        let items = cities[i]
+        for (let j = 0, len = items.length; j < len; j++) {
+          let item = items[j]
+          if (item.name.indexOf(value) !== -1) {
+            if (utils.isEmptyObject(alternative[i])) {
+              alternative[i] = []
+            }
+            alternative[i].push(item)
+          }
+        }
+      }
+      if (utils.isEmptyObject(alternative)) {
+        alternative = null
+      }
+      this.setData({
+        alternative,
+        showItems: alternative,
+      })
+    } else {
+      this.setData({
+        alternative: null,
+        showItems: cities,
+      })
+    }
   },
   // 按照字母顺序生成需要的数据格式
   getSortedAreaObj(areas) {
@@ -30,22 +72,40 @@ Page({
     return obj
   },
   choose(e) {
-    let item = e.currentTarget.dataset.item
-    let name = item.name
+    let name = e.currentTarget.dataset.name
     let pages = getCurrentPages()
     let len = pages.length
     let indexPage = pages[len - 2]
-    indexPage.setData({
-      // 是否切换了城市
-      cityChanged: true,
-      // 需要查询的城市
-      searchCity: name,
+    if (name) {
+      indexPage.search(name, () => {
+        wx.navigateBack({})
+      })
+    } else {
+      indexPage.init({}, () => {
+        wx.navigateBack({})
+      })
+    }
+  },
+  getHotCities(callback) {
+    wx.cloud.callFunction({
+      name: 'getHotCities',
+      data: {},
     })
-    wx.navigateBack({})
+    .then(res => {
+      let data = res.result.data
+      if (data) {
+        this.setData({
+          hotCities: data
+        })
+      }
+    })
   },
   onLoad () {
+    this.getHotCities()
+    let cities = this.getSortedAreaObj(staticData.cities || [])
     this.setData({
-      cities: this.getSortedAreaObj(staticData.cities || []),
+      cities,
+      showItems: cities,
     })
   },
 })

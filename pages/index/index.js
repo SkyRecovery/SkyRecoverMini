@@ -1,629 +1,569 @@
-// pm2.5 浓度对应的指数等级
-// 0-50 优
-// 50-100 良
-// 100-150 轻度污染：对敏感人群不健康
-// 150-200 中度污染：不健康
-// 200-300 重度污染：非常不健康
-// 300-500 严重污染：有毒物
-// 500以上 爆表：有毒物
-let bmap = require('../../lib/bmap-wx.js')
 let utils = require('../../utils/utils')
 let globalData = getApp().globalData
+const key = globalData.key
 let SYSTEMINFO = globalData.systeminfo
 Page({
-    data: {
-        cityDatas: {},
-        icons: ['/img/clothing.png', '/img/carwashing.png', '/img/pill.png', '/img/running.png', '/img/sun.png'],
-        // 用来清空 input
-        searchText: '',
-        // 是否已经弹出
-        hasPopped: false,
-        animationMain: {},
-        animationOne: {},
-        animationTwo: {},
-        animationThree: {},
-        // 是否切换了城市
-        cityChanged: false,
-        // 需要查询的城市
-        searchCity: '',
-        setting: {},
-        bcgImg: '',
-<<<<<<< HEAD
-        bcgColor: '#4FC3F7',
-=======
-        bcgColor: '#40a7e7',
->>>>>>> 05e4fffd53380cacb00cb26a54e8b220d6dcc36f
-        // 粗暴直接：移除后再创建，达到初始化组件的作用
-        showHeartbeat: true,
-        // heartbeat 时禁止搜索，防止动画执行
+  data: {
+    isIPhoneX: globalData.isIPhoneX,
+    message: '',
+    cityDatas: {},
+    hourlyDatas: [],
+    weatherIconUrl: globalData.weatherIconUrl,
+    detailsDic: {
+      key: ['tmp', 'fl', 'hum', 'pcpn', 'wind_dir', 'wind_deg', 'wind_sc', 'wind_spd', 'vis', 'pres', 'cloud', ''],
+      val: {
+        tmp: '温度(℃)',
+        fl: '体感温度(℃)',
+        hum: '相对湿度(%)',
+        pcpn: '降水量(mm)',
+        wind_dir: '风向',
+        wind_deg: '风向角度(deg)',
+        wind_sc: '风力(级)',
+        wind_spd: '风速(mk/h)',
+        vis: '能见度(km)',
+        pres: '气压(mb)',
+        cloud: '云量',
+      },
+    },
+    lifestyles: {
+      'comf': '舒适度指数',
+      'cw': '洗车指数',
+      'drsg': '穿衣指数',
+      'flu': '感冒指数',
+      'sport': '运动指数',
+      'trav': '旅游指数',
+      'uv': '紫外线指数',
+      'air': '空气污染扩散条件指数',
+      'ac': '空调开启指数',
+      'ag': '过敏指数',
+      'gl': '太阳镜指数',
+      'mu': '化妆指数',
+      'airc': '晾晒指数',
+      'ptfc': '交通指数',
+      'fsh': '钓鱼指数',
+      'spi': '防晒指数',
+    },
+    // 用来清空 input
+    searchText: '',
+    // 是否已经弹出
+    hasPopped: false,
+    animationMain: {},
+    animationOne: {},
+    animationTwo: {},
+    animationThree: {},
+    // 是否切换了城市
+    located: true,
+    // 需要查询的城市
+    searchCity: '',
+    setting: {},
+    bcgImgList: [{
+        src: '/img/beach-bird-birds-235787.jpg',
+        topColor: '#393836'
+      },
+      {
+        src: '/img/clouds-forest-idyllic-417102.jpg',
+        topColor: '#0085e5'
+      },
+      {
+        src: '/img/backlit-dawn-dusk-327466.jpg',
+        topColor: '#2d2225'
+      },
+      {
+        src: '/img/accomplishment-adventure-clear-sky-585825.jpg',
+        topColor: '#004a89'
+      },
+      {
+        src: '/img/fog-himalayas-landscape-38326.jpg',
+        topColor: '#b8bab9'
+      },
+      {
+        src: '/img/asphalt-blue-sky-clouds-490411.jpg',
+        topColor: '#009ffe'
+      },
+      {
+        src: '/img/aerial-climate-cold-296559.jpg',
+        topColor: '#d6d1e6'
+      },
+      {
+        src: '/img/beautiful-cold-dawn-547115.jpg',
+        topColor: '#ffa5bc'
+      }
+    ],
+    bcgImgIndex: 0,
+    bcgImg: '',
+    bcgImgAreaShow: false,
+    bcgColor: '#2d2225',
+    // 粗暴直接：移除后再创建，达到初始化组件的作用
+    showHeartbeat: true,
+    // heartbeat 时禁止搜索，防止动画执行
+    enableSearch: true,
+    openSettingButtonShow: false,
+    shareInfo: {},
+  },
+  success(data, location) {
+    this.setData({
+      openSettingButtonShow: false,
+      searchCity: location,
+    })
+    wx.stopPullDownRefresh()
+    let now = new Date()
+    // 存下来源数据
+    data.updateTime = now.getTime()
+    data.updateTimeFormat = utils.formatDate(now, "MM-dd hh:mm")
+    wx.setStorage({
+      key: 'cityDatas',
+      data,
+    })
+    this.setData({
+      cityDatas: data,
+    })
+  },
+  fail(res) {
+    wx.stopPullDownRefresh()
+    let errMsg = res.errMsg || ''
+    // 拒绝授权地理位置权限
+    if (errMsg.indexOf('deny') !== -1 || errMsg.indexOf('denied') !== -1) {
+      wx.showToast({
+        title: '需要开启地理位置权限',
+        icon: 'none',
+        duration: 2500,
+        success: (res) => {
+          if (this.canUseOpenSettingApi()) {
+            let timer = setTimeout(() => {
+              clearTimeout(timer)
+              wx.openSetting({})
+            }, 2500)
+          } else {
+            this.setData({
+              openSettingButtonShow: true,
+            })
+          }
+        },
+      })
+    } else {
+      wx.showToast({
+        title: '网络不给力，请稍后再试',
+        icon: 'none',
+      })
+    }
+  },
+  commitSearch(res) {
+    let val = ((res.detail || {}).value || '').replace(/\s+/g, '')
+    this.search(val)
+  },
+  dance() {
+    this.setData({
+      enableSearch: false,
+    })
+    let heartbeat = this.selectComponent('#heartbeat')
+    heartbeat.dance(() => {
+      this.setData({
+        showHeartbeat: false,
         enableSearch: true,
-        pos: {},
-<<<<<<< HEAD
-        painting: {}
-=======
->>>>>>> 05e4fffd53380cacb00cb26a54e8b220d6dcc36f
-    },
-    calcPM(value) {
-        if (value > 0 && value <= 50) {
-            return {
-                val: value,
-                desc: '优',
-                detail: '',
-            }
-        } else if (value > 50 && value <= 100) {
-            return {
-                val: value,
-                desc: '良',
-                detail: '',
-            }
-        } else if (value > 100 && value <= 150) {
-            return {
-                val: value,
-                desc: '轻度污染',
-                detail: '对敏感人群不健康',
-            }
-        } else if (value > 150 && value <= 200) {
-            return {
-                val: value,
-                desc: '中度污染',
-                detail: '不健康',
-            }
-        } else if (value > 200 && value <= 300) {
-            return {
-                val: value,
-                desc: '重度污染',
-                detail: '非常不健康',
-            }
-        } else if (value > 300 && value <= 500) {
-            return {
-                val: value,
-                desc: '严重污染',
-                detail: '有毒物',
-            }
-        } else if (value > 500) {
-            return {
-                val: value,
-                desc: '爆表',
-                detail: '能出来的都是条汉子',
-            }
-        }
-    },
-    success(data) {
-        wx.stopPullDownRefresh()
-        let now = new Date()
-            // 存下来源数据
-        data.updateTime = now.getTime()
-        data.updateTimeFormat = utils.formatDate(now, "MM-dd hh:mm")
-        let results = data.originalData.results[0] || {}
-        data.pm = this.calcPM(results['pm25'])
-            // 当天实时温度
-        data.temperature = `${results.weather_data[0].date.match(/\d+/g)[2]}`
-        wx.setStorage({
-            key: 'cityDatas',
-            data: data,
-        })
-        this.setData({
-            cityDatas: data,
-        })
-    },
-    commitSearch(res) {
-        let val = ((res.detail || {}).value || '').replace(/\s+/g, '')
-        this.search(val)
-    },
-    dance() {
-        this.setData({
-            enableSearch: false,
-        })
-        let that = this
-        let heartbeat = this.selectComponent('#heartbeat')
-        heartbeat.dance(() => {
-            that.setData({
-                showHeartbeat: false,
-                enableSearch: true,
-            })
-            that.setData({
-                showHeartbeat: true,
-            })
-        })
-    },
-    search(val) {
-        if (val === '520' || val === '521') {
-            this.setData({
-                searchText: '',
-            })
-            this.dance()
-            return
-        }
-        wx.pageScrollTo({
-            scrollTop: 0,
-            duration: 300,
-        })
-        if (val) {
-            let that = this
-            this.geocoder(val, (loc) => {
-                that.init({
-                    location: `${loc.lng},${loc.lat}`
-                })
-            })
-        }
-    },
-    // 地理位置编码
-    geocoder(address, success) {
-        let that = this
-        wx.request({
-            url: getApp().setGeocoderUrl(address),
-            success(res) {
-                let data = res.data || {}
-                if (!data.status) {
-                    let location = (data.result || {}).location || {}
-                        // location = {lng, lat}
-                    success && success(location)
-                } else {
-                    wx.showToast({
-                        title: data.msg || '网络不给力，请稍后再试',
-                        icon: 'none',
-                    })
-                }
-            },
-            fail(res) {
-                wx.showToast({
-                    title: res.errMsg || '网络不给力，请稍后再试',
-                    icon: 'none',
-                })
-            },
-            complete() {
-                that.setData({
-                    searchText: '',
-                })
-            },
-        })
-    },
-    fail(res) {
-        wx.stopPullDownRefresh()
-        let errMsg = res.errMsg || ''
-            // 拒绝授权地理位置权限
-        if (errMsg.indexOf('deny') !== -1 || errMsg.indexOf('denied') !== -1) {
+      })
+      this.setData({
+        showHeartbeat: true,
+      })
+    })
+  },
+  clearInput() {
+    this.setData({
+      searchText: '',
+    })
+  },
+  search(val, callback) {
+    if (val === '520' || val === '521') {
+      this.clearInput()
+      this.dance()
+      return
+    }
+    wx.pageScrollTo({
+      scrollTop: 0,
+      duration: 300,
+    })
+    if (val) {
+      this.setData({
+        located: false,
+      })
+      this.getWeather(val)
+      this.getHourly(val)
+    }
+    callback && callback()
+  },
+  // wx.openSetting 要废弃，button open-type openSetting 2.0.7 后支持
+  // 使用 wx.canIUse('openSetting') 都会返回 true，这里判断版本号区分
+  canUseOpenSettingApi() {
+    let systeminfo = getApp().globalData.systeminfo
+    let SDKVersion = systeminfo.SDKVersion
+    let version = utils.cmpVersion(SDKVersion, '2.0.7')
+    if (version < 0) {
+      return true
+    } else {
+      return false
+    }
+  },
+  init(params, callback) {
+    this.setData({
+      located: true,
+    })
+    wx.getLocation({
+      success: (res) => {
+        this.getWeather(`${res.latitude},${res.longitude}`)
+        this.getHourly(`${res.latitude},${res.longitude}`)
+        callback && callback()
+      },
+      fail: (res) => {
+        this.fail(res)
+      }
+    })
+  },
+  getWeather(location) {
+    wx.request({
+      url: `${globalData.requestUrl.weather}`,
+      data: {
+        location,
+        key,
+      },
+      success: (res) => {
+        if (res.statusCode === 200) {
+          let data = res.data.HeWeather6[0]
+          if (data.status === 'ok') {
+            this.clearInput()
+            this.success(data, location)
+          } else {
             wx.showToast({
-                title: '需要开启地理位置权限',
-                icon: 'none',
-                duration: 3000,
-                success(res) {
-                    let timer = setTimeout(() => {
-                        clearTimeout(timer)
-                        wx.openSetting({})
-                    }, 3000)
-                },
+              title: '查询失败',
+              icon: 'none',
             })
-        } else {
-            wx.showToast({
-                title: '网络不给力，请稍后再试',
-                icon: 'none',
-            })
+          }
         }
-    },
-    init(params) {
-        let that = this
-        let BMap = new bmap.BMapWX({
-            ak: globalData.ak,
+      },
+      fail: () => {
+        wx.showToast({
+          title: '查询失败',
+          icon: 'none',
         })
-        BMap.weather({
-            location: params.location,
-            fail: that.fail,
-            success: that.success,
-        })
-    },
-    // drawWeather () {
-    //   let context = wx.createCanvasContext('line')
-    //   context.setStrokeStyle("#ffffff")
-    //   context.setLineWidth(1)
-    //   context.moveTo(0, 0)
-    //   context.lineTo(350, 150)
-    //   context.stroke()
-    //   context.draw()
-    // },
-    onPullDownRefresh(res) {
-        this.init({})
-    },
-    setMenuPosition() {
-<<<<<<< HEAD
-        let that = this
-        wx.getStorage({
-            key: 'pos',
-            success: function(res) {
-                that.setData({
-                    pos: res.data,
-                })
-            },
-            fail: function(res) {
-                that.setData({
-=======
-        wx.getStorage({
-            key: 'pos',
-            success: (res) => {
-                this.setData({
-                    pos: res.data,
-                })
-            },
-            fail: (res) => {
-                this.setData({
->>>>>>> 05e4fffd53380cacb00cb26a54e8b220d6dcc36f
-                    pos: {},
-                })
-            },
-        })
-    },
-    getCityDatas() {
-<<<<<<< HEAD
-        let that = this
-        let cityDatas = wx.getStorage({
-            key: 'cityDatas',
-            success: function(res) {
-                that.setData({
-=======
-        let cityDatas = wx.getStorage({
-            key: 'cityDatas',
-            success: (res) => {
-                this.setData({
->>>>>>> 05e4fffd53380cacb00cb26a54e8b220d6dcc36f
-                    cityDatas: res.data,
-                })
-            },
-        })
-    },
-    onShow() {
-        this.getCityDatas()
-        this.setMenuPosition()
-<<<<<<< HEAD
-        let that = this
-=======
->>>>>>> 05e4fffd53380cacb00cb26a54e8b220d6dcc36f
-        let bcgColor = utils.themeSetting()
-        this.setData({
-            bcgColor,
-        })
-        this.setBcg()
-        this.initSetting((setting) => {
-<<<<<<< HEAD
-            that.checkUpdate(setting)
-=======
-            this.checkUpdate(setting)
->>>>>>> 05e4fffd53380cacb00cb26a54e8b220d6dcc36f
-        })
-        if (!this.data.cityChanged) {
-            this.init({})
-        } else {
-            this.search(this.data.searchCity)
+      },
+    })
+  },
+  getHourly(location) {
+    wx.request({
+      url: `${globalData.requestUrl.hourly}`,
+      data: {
+        location,
+        key,
+      },
+      success: (res) => {
+        if (res.statusCode === 200) {
+          let data = res.data.HeWeather6[0]
+          if (data.status === 'ok') {
             this.setData({
-                cityChanged: false,
-                searchCity: '',
+              hourlyDatas: data.hourly || []
             })
-<<<<<<< HEAD
+          }
         }
-    },
-    onHide() {
-        wx.setStorage({
-            key: 'pos',
-            data: this.data.pos,
+      },
+      fail: () => {
+        wx.showToast({
+          title: '查询失败',
+          icon: 'none',
         })
-    },
-    checkUpdate(setting) {
-        // 兼容低版本
-        if (!setting.forceUpdate || !wx.getUpdateManager) {
-            return
-        }
-        let updateManager = wx.getUpdateManager()
-        updateManager.onCheckForUpdate((res) => {
-            console.error(res)
-        })
-        updateManager.onUpdateReady(function() {
-            wx.showModal({
-                title: '更新提示',
-                content: '新版本已下载完成，是否重启应用？',
-                success: function(res) {
-                    if (res.confirm) {
-                        updateManager.applyUpdate()
-                    }
-                }
-            })
-        })
-    },
-    setBcg() {
-        let that = this
-        wx.getSavedFileList({
-            success: function(res) {
-                let fileList = res.fileList
-                if (!utils.isEmptyObject(fileList)) {
-                    that.setData({
-                        bcgImg: fileList[0].filePath,
-                    })
-                } else {
-                    that.setData({
-                        bcgImg: '',
-                    })
-                }
-            },
-        })
-    },
-    initSetting(successFunc) {
-        let that = this
-        wx.getStorage({
-            key: 'setting',
-            success: function(res) {
-                let setting = res.data || {}
-                that.setData({
-                    setting,
-                })
-                successFunc && successFunc(setting)
-            },
-            fail: function() {
-                that.setData({
-                    setting: {},
-                })
-            },
-        })
-    },
-    onShareAppMessage(res) {
-        return {
-            title: '自律更自由',
-            path: `/pages/index/index`,
-            // imageUrl: '',
-            success() {},
-            fail(e) {
-                let errMsg = e.errMsg || ''
-                    // 对不是用户取消转发导致的失败进行提示
-                let msg = '分享失败，可重新分享'
-                if (errMsg.indexOf('cancel') !== -1) {
-                    msg = '取消分享'
-                }
-                wx.showToast({
-                    title: msg,
-                    icon: 'none',
-                })
-            }
-        }
-=======
-        }
-    },
-    onHide() {
-        wx.setStorage({
-            key: 'pos',
-            data: this.data.pos,
-        })
-    },
-    checkUpdate(setting) {
-        // 兼容低版本
-        if (!setting.forceUpdate || !wx.getUpdateManager) {
-            return
-        }
-        let updateManager = wx.getUpdateManager()
-        updateManager.onCheckForUpdate((res) => {
-            console.error(res)
-        })
-        updateManager.onUpdateReady(function() {
-            wx.showModal({
-                title: '更新提示',
-                content: '新版本已下载完成，是否重启应用？',
-                success: function(res) {
-                    if (res.confirm) {
-                        updateManager.applyUpdate()
-                    }
-                }
-            })
-        })
-    },
-    setBcg() {
-        wx.getSavedFileList({
-            success: (res) => {
-                let fileList = res.fileList
-                if (!utils.isEmptyObject(fileList)) {
-                    this.setData({
-                        bcgImg: fileList[0].filePath,
-                    })
-                } else {
-                    this.setData({
-                        bcgImg: '',
-                    })
-                }
-            },
-        })
-    },
-    initSetting(successFunc) {
-        wx.getStorage({
-            key: 'setting',
-            success: (res) => {
-                let setting = res.data || {}
-                this.setData({
-                    setting,
-                })
-                successFunc && successFunc(setting)
-            },
-            fail: (res) => {
-                this.setData({
-                    setting: {},
-                })
-            },
-        })
-    },
-    onShareAppMessage(res) {
-        return {
-            title: 'Quiet Weather--安静天气',
-            path: `/pages/index/index`,
-            // imageUrl: '',
-            success() {},
-            fail(e) {
-                let errMsg = e.errMsg || ''
-                    // 对不是用户取消转发导致的失败进行提示
-                let msg = '分享失败，可重新分享'
-                if (errMsg.indexOf('cancel') !== -1) {
-                    msg = '取消分享'
-                }
-                wx.showToast({
-                    title: msg,
-                    icon: 'none',
-                })
-            }
-        }
->>>>>>> 05e4fffd53380cacb00cb26a54e8b220d6dcc36f
-    },
-    menuMainMove(e) {
-        // 如果已经弹出来了，需要先收回去，否则会受 top、left 会影响
-        if (this.data.hasPopped) {
-            this.takeback()
-            this.setData({
-                hasPopped: false,
-            })
-        }
-        let windowWidth = SYSTEMINFO.windowWidth
-        let windowHeight = SYSTEMINFO.windowHeight
-        let touches = e.touches[0]
-        let clientX = touches.clientX
-        let clientY = touches.clientY
-            // 边界判断
-        if (clientX > windowWidth - 40) {
-            clientX = windowWidth - 40
-        }
-        if (clientX <= 90) {
-            clientX = 90
-        }
-        if (clientY > windowHeight - 40 - 60) {
-            clientY = windowHeight - 40 - 60
-        }
-        if (clientY <= 60) {
-            clientY = 60
-        }
-        let pos = {
-            left: clientX,
-            top: clientY,
-        }
+      },
+    })
+  },
+  onPullDownRefresh(res) {
+    this.reloadPage()
+  },
+  getCityDatas() {
+    let cityDatas = wx.getStorage({
+      key: 'cityDatas',
+      success: (res) => {
         this.setData({
-            pos,
+          cityDatas: res.data,
         })
-    },
-    menuMain() {
-        if (!this.data.hasPopped) {
-            this.popp()
-            this.setData({
-                hasPopped: true,
-            })
-        } else {
-            this.takeback()
-            this.setData({
-                hasPopped: false,
-            })
+      },
+    })
+  },
+  setBcgImg(index) {
+    if (index !== undefined) {
+      this.setData({
+        bcgImgIndex: index,
+        bcgImg: this.data.bcgImgList[index].src,
+        bcgColor: this.data.bcgImgList[index].topColor,
+      })
+      this.setNavigationBarColor()
+      return
+    }
+    wx.getStorage({
+      key: 'bcgImgIndex',
+      success: (res) => {
+        let bcgImgIndex = res.data || 0
+        this.setData({
+          bcgImgIndex,
+          bcgImg: this.data.bcgImgList[bcgImgIndex].src,
+          bcgColor: this.data.bcgImgList[bcgImgIndex].topColor,
+        })
+        this.setNavigationBarColor()
+      },
+      fail: () => {
+        this.setData({
+          bcgImgIndex: 0,
+          bcgImg: this.data.bcgImgList[0].src,
+          bcgColor: this.data.bcgImgList[0].topColor,
+        })
+        this.setNavigationBarColor()
+      },
+    })
+  },
+  setNavigationBarColor(color) {
+    let bcgColor = color || this.data.bcgColor
+    wx.setNavigationBarColor({
+      frontColor: '#ffffff',
+      backgroundColor: this.data.bcgColor,
+    })
+  },
+  getBroadcast(callback) {
+    wx.cloud.callFunction({
+        name: 'getBroadcast',
+        data: {
+          hour: new Date().getHours(),
+        },
+      })
+      .then(res => {
+        let data = res.result.data
+        console.log(data)
+        if (data) {
+          callback && callback(data[0].message)
         }
-    },
-    menuOne() {
-        this.menuMain()
-        wx.navigateTo({
-            url: '/pages/citychoose/citychoose',
-        })
-    },
-    menuTwo() {
-        this.menuMain()
-        wx.navigateTo({
-            url: '/pages/setting/setting',
-        })
-    },
-    menuThree() {
-        this.menuMain()
-        wx.navigateTo({
-            url: '/pages/about/about',
-        })
-    },
-<<<<<<< HEAD
-    menuFour() {
-        this.menuMain()
-        wx.navigateTo({
-            url: '/pages/share/index',
-        })
-    },
-=======
->>>>>>> 05e4fffd53380cacb00cb26a54e8b220d6dcc36f
-    popp() {
-        let animationMain = wx.createAnimation({
-            duration: 200,
-            timingFunction: 'ease-out'
-        })
-        let animationOne = wx.createAnimation({
-            duration: 200,
-            timingFunction: 'ease-out'
-        })
-        let animationTwo = wx.createAnimation({
-            duration: 200,
-            timingFunction: 'ease-out'
-        })
-        let animationThree = wx.createAnimation({
-            duration: 200,
-            timingFunction: 'ease-out'
-        })
-<<<<<<< HEAD
-        let animationFour = wx.createAnimation({
-            duration: 200,
-            timingFunction: 'ease-out'
-        })
-        animationMain.rotateZ(180).step()
-        animationOne.translate(-50, -60).rotateZ(360).opacity(1).step()
-        animationTwo.translate(-100, 0).rotateZ(360).opacity(1).step()
-        animationThree.translate(-50, 60).rotateZ(360).opacity(1).step()
-        animationFour.translate(-50, 0).rotateZ(360).opacity(1).step()
-=======
-        animationMain.rotateZ(180).step()
-        animationOne.translate(-50, -60).rotateZ(360).opacity(1).step()
-        animationTwo.translate(-90, 0).rotateZ(360).opacity(1).step()
-        animationThree.translate(-50, 60).rotateZ(360).opacity(1).step()
->>>>>>> 05e4fffd53380cacb00cb26a54e8b220d6dcc36f
+      })
+  },
+  reloadGetBroadcast() {
+    this.getBroadcast((message) => {
+      this.setData({
+        message,
+      })
+    })
+  },
+  reloadWeather() {
+    if (this.data.located) {
+      this.init({})
+    } else {
+      this.search(this.data.searchCity)
+      this.setData({
+        searchCity: '',
+      })
+    }
+  },
+  onShow() {
+    // onShareAppMessage 要求同步返回
+    if (!utils.isEmptyObject(this.data.shareInfo)) {
+      return
+    }
+    wx.cloud.callFunction({
+        name: 'getShareInfo',
+      })
+      .then(res => {
+        let shareInfo = res.result
+        if (shareInfo) {
+          if (!utils.isEmptyObject(shareInfo)) {
+            this.setData({
+              shareInfo,
+            })
+          }
+        }
+      })
+  },
+  onLoad() {
+    this.reloadPage()
+  },
+  reloadPage() {
+    this.setBcgImg()
+    this.getCityDatas()
+    this.reloadInitSetting()
+    this.reloadWeather()
+    this.reloadGetBroadcast()
+  },
+  checkUpdate(setting) {
+    // 兼容低版本
+    if (!setting.forceUpdate || !wx.getUpdateManager) {
+      return
+    }
+    let updateManager = wx.getUpdateManager()
+    updateManager.onCheckForUpdate((res) => {
+      console.error(res)
+    })
+    updateManager.onUpdateReady(function() {
+      wx.showModal({
+        title: '更新提示',
+        content: '新版本已下载完成，是否重启应用？',
+        success: function(res) {
+          if (res.confirm) {
+            updateManager.applyUpdate()
+          }
+        }
+      })
+    })
+  },
+  showBcgImgArea() {
+    this.setData({
+      bcgImgAreaShow: true,
+    })
+  },
+  hideBcgImgArea() {
+    this.setData({
+      bcgImgAreaShow: false,
+    })
+  },
+  chooseBcg(e) {
+    let dataset = e.currentTarget.dataset
+    let src = dataset.src
+    let index = dataset.index
+    this.setBcgImg(index)
+    wx.setStorage({
+      key: 'bcgImgIndex',
+      data: index,
+    })
+  },
+  toCitychoose() {
+    wx.navigateTo({
+      url: '/pages/citychoose/citychoose',
+    })
+  },
+  initSetting(successFunc) {
+    wx.getStorage({
+      key: 'setting',
+      success: (res) => {
+        let setting = res.data || {}
         this.setData({
-            animationMain: animationMain.export(),
-            animationOne: animationOne.export(),
-            animationTwo: animationTwo.export(),
-            animationThree: animationThree.export(),
-<<<<<<< HEAD
-            animationFour: animationFour.export()
-=======
->>>>>>> 05e4fffd53380cacb00cb26a54e8b220d6dcc36f
+          setting,
         })
-    },
-    takeback() {
-        let animationMain = wx.createAnimation({
-            duration: 200,
-            timingFunction: 'ease-out'
-        })
-        let animationOne = wx.createAnimation({
-            duration: 200,
-            timingFunction: 'ease-out'
-        })
-        let animationTwo = wx.createAnimation({
-            duration: 200,
-            timingFunction: 'ease-out'
-        })
-        let animationThree = wx.createAnimation({
-            duration: 200,
-            timingFunction: 'ease-out'
-        })
-<<<<<<< HEAD
-        let animationFour = wx.createAnimation({
-            duration: 200,
-            timingFunction: 'ease-out'
-        })
-=======
->>>>>>> 05e4fffd53380cacb00cb26a54e8b220d6dcc36f
-        animationMain.rotateZ(0).step();
-        animationOne.translate(0, 0).rotateZ(0).opacity(0).step()
-        animationTwo.translate(0, 0).rotateZ(0).opacity(0).step()
-        animationThree.translate(0, 0).rotateZ(0).opacity(0).step()
-<<<<<<< HEAD
-        animationFour.translate(0, 0).rotateZ(0).opacity(0).step()
-=======
->>>>>>> 05e4fffd53380cacb00cb26a54e8b220d6dcc36f
+        successFunc && successFunc(setting)
+      },
+      fail: () => {
         this.setData({
-            animationMain: animationMain.export(),
-            animationOne: animationOne.export(),
-            animationTwo: animationTwo.export(),
-            animationThree: animationThree.export(),
-<<<<<<< HEAD
-            animationFour: animationFour.export()
-=======
->>>>>>> 05e4fffd53380cacb00cb26a54e8b220d6dcc36f
+          setting: {},
         })
-    },
+      },
+    })
+  },
+  reloadInitSetting() {
+    this.initSetting((setting) => {
+      this.checkUpdate(setting)
+    })
+  },
+  onShareAppMessage(res) {
+    let shareInfo = this.data.shareInfo
+    return {
+      title: shareInfo.title || 'Freedom Weather',
+      path: shareInfo.path || '/pages/index/index',
+      imageUrl: shareInfo.imageUrl,
+    }
+  },
+  menuHide() {
+    if (this.data.hasPopped) {
+      this.takeback()
+      this.setData({
+        hasPopped: false,
+      })
+    }
+  },
+  menuMain() {
+    if (!this.data.hasPopped) {
+      this.popp()
+      this.setData({
+        hasPopped: true,
+      })
+    } else {
+      this.takeback()
+      this.setData({
+        hasPopped: false,
+      })
+    }
+  },
+  menuToCitychoose() {
+    this.menuMain()
+    wx.navigateTo({
+      url: '/pages/citychoose/citychoose',
+    })
+  },
+  menuToSetting() {
+    this.menuMain()
+    wx.navigateTo({
+      url: '/pages/setting/setting',
+    })
+  },
+  menuToAbout() {
+    this.menuMain()
+    wx.navigateTo({
+      url: '/pages/about/about',
+    })
+  },
+  popp() {
+    let animationMain = wx.createAnimation({
+      duration: 200,
+      timingFunction: 'ease-out'
+    })
+    let animationOne = wx.createAnimation({
+      duration: 200,
+      timingFunction: 'ease-out'
+    })
+    let animationTwo = wx.createAnimation({
+      duration: 200,
+      timingFunction: 'ease-out'
+    })
+    let animationThree = wx.createAnimation({
+      duration: 200,
+      timingFunction: 'ease-out'
+    })
+    let animationFour = wx.createAnimation({
+      duration: 200,
+      timingFunction: 'ease-out'
+    })
+    animationMain.rotateZ(180).step()
+    animationOne.translate(0, -60).rotateZ(360).opacity(1).step()
+    animationTwo.translate(-Math.sqrt(3600 - 400), -30).rotateZ(360).opacity(1).step()
+    animationThree.translate(-Math.sqrt(3600 - 400), 30).rotateZ(360).opacity(1).step()
+    animationFour.translate(0, 60).rotateZ(360).opacity(1).step()
+    this.setData({
+      animationMain: animationMain.export(),
+      animationOne: animationOne.export(),
+      animationTwo: animationTwo.export(),
+      animationThree: animationThree.export(),
+      animationFour: animationFour.export(),
+    })
+  },
+  takeback() {
+    let animationMain = wx.createAnimation({
+      duration: 200,
+      timingFunction: 'ease-out'
+    })
+    let animationOne = wx.createAnimation({
+      duration: 200,
+      timingFunction: 'ease-out'
+    })
+    let animationTwo = wx.createAnimation({
+      duration: 200,
+      timingFunction: 'ease-out'
+    })
+    let animationThree = wx.createAnimation({
+      duration: 200,
+      timingFunction: 'ease-out'
+    })
+    let animationFour = wx.createAnimation({
+      duration: 200,
+      timingFunction: 'ease-out'
+    })
+    animationMain.rotateZ(0).step();
+    animationOne.translate(0, 0).rotateZ(0).opacity(0).step()
+    animationTwo.translate(0, 0).rotateZ(0).opacity(0).step()
+    animationThree.translate(0, 0).rotateZ(0).opacity(0).step()
+    animationFour.translate(0, 0).rotateZ(0).opacity(0).step()
+    this.setData({
+      animationMain: animationMain.export(),
+      animationOne: animationOne.export(),
+      animationTwo: animationTwo.export(),
+      animationThree: animationThree.export(),
+      animationFour: animationFour.export(),
+    })
+  },
 })
