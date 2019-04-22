@@ -1,0 +1,145 @@
+.container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+}
+.wrapper {
+  font-size: 0;
+  background: #fff;
+  padding: 30px;
+  position: relative;
+  height: 128px;
+  box-sizing: border-box;
+}
+.wrapper .search {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+.inner {
+  background: #f4f6f9;
+  font-size: 30px;
+  padding: 16px 0 16px 20px;
+  box-sizing: border-box;
+  border-radius: 8px;
+  flex: 1;
+  display: flex;
+  align-items: center;
+}
+.inner input {
+  background: #f4f6f9;
+  font-size: 30px;
+  height: 38px;
+  /* 覆盖默认样式 min-height */
+  min-height: 38px;
+  line-height: 38px;
+  width: 100%;
+  box-sizing: border-box;
+}
+.icon {
+  width: 28px;
+  height: 28px;
+  margin-right: 10px;
+}
+.cancel {
+  font-size: 30px;
+  display: inline-block;
+  color: #666;
+  width: 2.5em;
+  text-align: right;
+}
+.items {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+}
+.items .item {
+  border: 1px solid rgb(242, 242, 242);
+  background: #efefef;
+  border-radius: 10px;
+  padding: 8px 40px;
+  margin-right: 30px;
+  margin-bottom: 36px;
+}
+.top .title {
+  margin-bottom: 30px;
+}
+.top {
+  padding: 30px 96px 20px 30px;
+}
+.top,
+.bottom {
+  font-size: 32px;
+  color: #333;
+  background: #fff;
+}
+.hot {
+  background: #fff;
+  margin-top: 10px;
+  padding: 30px 30px 20px;
+}
+.hot .title {
+  font-size: 32px;
+}
+.hot .cities {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.hot .item {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 30%;
+  height: 60px;
+  background: #f4f6f9;
+  border-radius: 8px;
+  color: #333;
+  font-size: 28px;
+  margin-top: 20px;
+  margin-left: 2.5%;
+  margin-right: 2.5%;
+}
+.hot .item .icon {
+  width: 24px;
+  height: 24px;
+  margin-right: 8px;
+}
+.hot .item.active {
+  background: #40a7e7;
+  color: #fff;
+}
+.hot .item:nth-child(3n+1) {
+  margin-left: 0;
+}
+.hot .item:nth-child(3n) {
+  margin-right: 0;
+}
+.bottom .key {
+  background: #f4f6f9;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  padding: 0 30px;
+}
+.bottom .values .value {
+  border-bottom: 1px solid #efefef;
+  height: 104px;
+  display: flex;
+  align-items: center;
+  padding: 0 30px;
+}
+.bottom .values .value:last-child {
+  border-bottom: none;
+}
+.hover {
+  background: #f4f6f9;
+}
+.empty {
+  margin-top: 100px;
+  font-size: 30px;
+  text-align: center;
+  color: #666;
+}
