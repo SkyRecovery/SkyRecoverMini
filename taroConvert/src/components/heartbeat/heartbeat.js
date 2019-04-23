@@ -101,7 +101,7 @@ class _C extends Taro.Component {
     return arr.map((item, index) => {
       return (
         <Image
-          key={index}
+          key={index+''}
           animation={animations[index]}
           className="heart"
           style={

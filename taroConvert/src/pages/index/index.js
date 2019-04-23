@@ -89,35 +89,35 @@ class _C extends Taro.Component {
     setting: {},
     bcgImgList: [
       {
-        src: '/img/beach-bird-birds-235787.jpg',
+        src: '../../img/beach-bird-birds-235787.jpg',
         topColor: '#393836'
       },
       {
-        src: '/img/clouds-forest-idyllic-417102.jpg',
+        src: '../../img/clouds-forest-idyllic-417102.jpg',
         topColor: '#0085e5'
       },
       {
-        src: '/img/backlit-dawn-dusk-327466.jpg',
+        src: '../../img/backlit-dawn-dusk-327466.jpg',
         topColor: '#2d2225'
       },
       {
-        src: '/img/accomplishment-adventure-clear-sky-585825.jpg',
+        src: '../../img/accomplishment-adventure-clear-sky-585825.jpg',
         topColor: '#004a89'
       },
       {
-        src: '/img/fog-himalayas-landscape-38326.jpg',
+        src: '../../img/fog-himalayas-landscape-38326.jpg',
         topColor: '#b8bab9'
       },
       {
-        src: '/img/asphalt-blue-sky-clouds-490411.jpg',
+        src: '../../img/asphalt-blue-sky-clouds-490411.jpg',
         topColor: '#009ffe'
       },
       {
-        src: '/img/aerial-climate-cold-296559.jpg',
+        src: '../../img/aerial-climate-cold-296559.jpg',
         topColor: '#d6d1e6'
       },
       {
-        src: '/img/beautiful-cold-dawn-547115.jpg',
+        src: '../../img/beautiful-cold-dawn-547115.jpg',
         topColor: '#ffa5bc'
       }
     ],
@@ -664,6 +664,7 @@ class _C extends Taro.Component {
       animationFour: animationFour,
       animationMain: animationMain
     } = this.state
+    console.log('this.stata',this.state)
     return (
       <View
         className={'container ' + (isIPhoneX ? 'iphonex-padding' : '')}
@@ -704,7 +705,7 @@ class _C extends Taro.Component {
                       <Image
                         src={item.src}
                         onClick={this.chooseBcg}
-                        data-index={index}
+                        data-index={index+''}
                         data-src={item.src}
                       />
                     </View>
@@ -886,7 +887,7 @@ class _C extends Taro.Component {
                     <View className="item" key={index}>
                       <Image
                         className="icon"
-                        src={'/img/lifestyle_' + item.type + '.png'}
+                        src={'../../img/lifestyle_' + item.type + '.png'}
                       />
                       <View className="right">
                         <View className="key">

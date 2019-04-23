@@ -52,8 +52,7 @@ class App extends Taro.Component {
         desc: '定位以获取当前位置天气信息'
       }
     },
-    cloud: true,
-    sitemapLocation: 'sitemap.json'
+    cloud: true
   }
 
   render() {
