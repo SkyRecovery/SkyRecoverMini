@@ -87,18 +87,18 @@ Page({
     }
   },
   getHotCities(callback) {
-    wx.cloud.callFunction({
-      name: 'getHotCities',
-      data: {},
-    })
-    .then(res => {
-      let data = res.result.data
-      if (data) {
-        this.setData({
-          hotCities: data
-        })
-      }
-    })
+    // wx.cloud.callFunction({
+    //   name: 'getHotCities',
+    //   data: {},
+    // })
+    // .then(res => {
+    //   let data = res.result.data
+    //   if (data) {
+    //     this.setData({
+    //       hotCities: data
+    //     })
+    //   }
+    // })
   },
   onLoad () {
     this.getHotCities()
