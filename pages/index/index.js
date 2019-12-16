@@ -323,19 +323,19 @@ Page({
     })
   },
   getBroadcast(callback) {
-    wx.cloud.callFunction({
-        name: 'getBroadcast',
-        data: {
-          hour: new Date().getHours(),
-        },
-      })
-      .then(res => {
-        let data = res.result.data
-        console.log(data)
-        if (data) {
-          callback && callback(data[0].message)
-        }
-      })
+    // wx.cloud.callFunction({
+    //     name: 'getBroadcast',
+    //     data: {
+    //       hour: new Date().getHours(),
+    //     },
+    //   })
+    //   .then(res => {
+    //     let data = res.result.data
+    //     console.log(data)
+    //     if (data) {
+    //       callback && callback(data[0].message)
+    //     }
+    //   })
   },
   reloadGetBroadcast() {
     this.getBroadcast((message) => {
