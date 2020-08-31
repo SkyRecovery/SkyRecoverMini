@@ -8,7 +8,7 @@
   ],
   "window": {
     "backgroundTextStyle": "dark",
-    "navigationBarBackgroundColor": "black",
+    "navigationBarBackgroundColor": "#000000",
     "navigationBarTitleText": "Quiet Weather",
     "navigationBarTextStyle": "black"
   },

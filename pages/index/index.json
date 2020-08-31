@@ -1,5 +1,5 @@
 {
-  "navigationBarTitleText": "Freedom1 Weather",
+  "navigationBarTitleText": "Freedom Weather",
   "enablePullDownRefresh": true,
   "usingComponents": {
     "heartbeat": "/components/heartbeat/heartbeat"

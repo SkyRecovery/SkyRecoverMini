@@ -56,9 +56,10 @@ Page({
     // 需要查询的城市
     searchCity: '',
     setting: {},
-    bcgImgList: [{
-        src: '/img/beach-bird-birds-235787.jpg',
-        topColor: '#393836'
+    bcgImgList: [
+      {
+        src: '/img/accomplishment-adventure-clear-sky-585825.jpg',
+        topColor: '#004a89'
       },
       {
         src: '/img/clouds-forest-idyllic-417102.jpg',
@@ -67,10 +68,6 @@ Page({
       {
         src: '/img/backlit-dawn-dusk-327466.jpg',
         topColor: '#2d2225'
-      },
-      {
-        src: '/img/accomplishment-adventure-clear-sky-585825.jpg',
-        topColor: '#004a89'
       },
       {
         src: '/img/fog-himalayas-landscape-38326.jpg',
@@ -87,7 +84,10 @@ Page({
       {
         src: '/img/beautiful-cold-dawn-547115.jpg',
         topColor: '#ffa5bc'
-      }
+      }, {
+        src: '/img/beach-bird-birds-235787.jpg',
+        topColor: '#393836'
+      },
     ],
     bcgImgIndex: 0,
     bcgImg: '',
