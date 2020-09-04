@@ -7,10 +7,10 @@
     "pages/systeminfo/systeminfo"
   ],
   "window": {
-    "backgroundTextStyle": "dark",
-    "navigationBarBackgroundColor": "#000000",
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#004a89",
     "navigationBarTitleText": "Quiet Weather",
-    "navigationBarTextStyle": "black"
+    "navigationBarTextStyle": "white"
   },
   "permission": {
     "scope.userLocation": {
