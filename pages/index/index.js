@@ -529,6 +529,10 @@ Page({
       duration: 200,
       timingFunction: "ease-out",
     });
+    let animationFour = wx.createAnimation({
+      duration: 200,
+      timingFunction: 'ease-out'
+    })
     animationMain.rotateZ(180).step();
     animationOne.translate(0, -60).rotateZ(360).opacity(1).step();
     animationTwo
@@ -541,12 +545,14 @@ Page({
       .rotateZ(360)
       .opacity(1)
       .step();
-    // animationFour.translate(0, 60).rotateZ(360).opacity(1).step()
+    animationFour.translate(0, 60).rotateZ(360).opacity(1).step()
     this.setData({
       animationMain: animationMain.export(),
       animationOne: animationOne.export(),
       animationTwo: animationTwo.export(),
       animationThree: animationThree.export(),
+      animationFour: animationFour.export(),
+
     });
   },
   takeback() {
