@@ -9,13 +9,13 @@ Page({
     inputText: '',
     hotCities: [],
   },
-  cancel () {
+  cancel() {
     this.setData({
       inputText: '',
       showItems: this.data.cities,
     })
   },
-  inputFilter (e) {
+  inputFilter(e) {
     let alternative = {}
     let cities = this.data.cities
     let value = e.detail.value.replace(/\s+/g, '')
@@ -72,6 +72,7 @@ Page({
     return obj
   },
   choose(e) {
+    console.log(e)
     let name = e.currentTarget.dataset.name
     let pages = getCurrentPages()
     let len = pages.length
@@ -87,20 +88,21 @@ Page({
     }
   },
   getHotCities(callback) {
-    // wx.cloud.callFunction({
-    //   name: 'getHotCities',
-    //   data: {},
-    // })
-    // .then(res => {
-    //   let data = res.result.data
-    //   if (data) {
-    //     this.setData({
-    //       hotCities: data
-    //     })
-    //   }
-    // })
+    wx.cloud.callFunction({
+        name: 'getHotCities',
+        data: {},
+      })
+      .then(res => {
+        let data = res.result.data
+        console.log(data)
+        if (data) {
+          this.setData({
+            hotCities: data
+          })
+        }
+      })
   },
-  onLoad () {
+  onLoad() {
     this.getHotCities()
     let cities = this.getSortedAreaObj(staticData.cities || [])
     this.setData({
