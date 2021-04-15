@@ -33,16 +33,6 @@ II、`d0e51c8` 版本之后为[小程序云开发](https://developers.weixin.qq.
 > * 在 `app.js` 中替换 `globalData` 中的 `key` 为你的 `key`；
 > * Run and Enjoy!
 
-## 请喝咖啡
-如果我的项目对你有帮助，可以请我喝杯咖啡噢~
-
-### 支付宝
-
-<img src="https://raw.githubusercontent.com/myvin/miniprogram/master/9181893579988_.pic_hd.jpg" width="300" /> <img src="https://raw.githubusercontent.com/myvin/miniprogram/master/9191893579989_.pic.jpg" width="300" />
-
-### 微信
-
-<img src="https://raw.githubusercontent.com/myvin/miniprogram/master/9201893579990_.pic_hd.jpg" width="300" />
 
 ## License
 
