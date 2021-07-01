@@ -4,13 +4,13 @@
       <block wx:for="{{bannerImgList}}" wx:key="index">
         <swiper-item>
           <view class='info' data-index='index' catchtap='previewImages'>
-            <image src='{{item.src}}'></image>
+            <!-- <image src='{{item.src}}'></image> -->
+                <ad unit-id="adunit-a4ec392026d90b4e"></ad>
             <view class='name'>{{item.title}}</view>
           </view>
         </swiper-item>
       </block>
     </swiper>
-    <ad unit-id="adunit-a4ec392026d90b4e"></ad>
     <view class='item'>
       <view class='title'>代码已开源</view>
       <view class='i' catchtap='copy' data-title='项目地址' data-content='{{projectAddress}}'>
