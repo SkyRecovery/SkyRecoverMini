@@ -66,14 +66,6 @@ Page({
         topColor: '#0085e5'
       },
       {
-        src: '/img/backlit-dawn-dusk-327466.jpg',
-        topColor: '#2d2225'
-      },
-      {
-        src: '/img/fog-himalayas-landscape-38326.jpg',
-        topColor: '#b8bab9'
-      },
-      {
         src: '/img/asphalt-blue-sky-clouds-490411.jpg',
         topColor: '#009ffe'
       },

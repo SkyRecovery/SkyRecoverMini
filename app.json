@@ -1,5 +1,6 @@
 {
   "pages": [
+    "pages/back/back",
     "pages/about/about",
     "pages/index/index",
     "pages/citychoose/citychoose",
@@ -19,7 +20,7 @@
     "backgroundColor": "#ffffff",
     "list": [
       {
-        "pagePath": "pages/about/about",
+        "pagePath": "pages/back/back",
         "iconPath": "img/tabicon/tabicon-a1.png",
         "selectedIconPath": "img/tabicon/tabicon-b1.png",
         "text": "首页"
@@ -44,5 +45,9 @@
     }
   },
   "cloud": true,
-  "sitemapLocation": "sitemap.json"
+  "sitemapLocation": "sitemap.json",
+  "useExtendedLib": {
+    "kbone": true,
+    "weui": true
+  }
 }

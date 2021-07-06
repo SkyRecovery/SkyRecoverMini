@@ -5,7 +5,7 @@
         <swiper-item>
           <view class='info' data-index='index' catchtap='previewImages'>
             <!-- <image src='{{item.src}}'></image> -->
-                <ad unit-id="adunit-a4ec392026d90b4e"></ad>
+            <ad unit-id="adunit-a4ec392026d90b4e"></ad>
             <view class='name'>{{item.title}}</view>
           </view>
         </swiper-item>
@@ -23,6 +23,34 @@
         </view>
       </view>
     </view>
+    <view class="page__bd page__bd_spacing">
+    <view class="weui-flex">
+        <view class="weui-flex__item"><view class="placeholder">weui</view></view>
+    </view>
+    <view class="weui-flex">
+        <view class="weui-flex__item"><view class="placeholder">weui</view></view>
+        <view class="weui-flex__item"><view class="placeholder">weui</view></view>
+    </view>
+    <view class="weui-flex">
+        <view class="weui-flex__item"><view class="placeholder">weui</view></view>
+        <view class="weui-flex__item"><view class="placeholder">weui</view></view>
+        <view class="weui-flex__item"><view class="placeholder">weui</view></view>
+    </view>
+    <view class="weui-flex">
+        <view class="weui-flex__item"><view class="placeholder">weui</view></view>
+        <view class="weui-flex__item"><view class="placeholder">weui</view></view>
+        <view class="weui-flex__item"><view class="placeholder">weui</view></view>
+        <view class="weui-flex__item"><view class="placeholder">weui</view></view>
+    </view>
+    <view class="weui-flex">
+        <view><view class="placeholder">weui</view></view>
+        <view class="weui-flex__item"><view class="placeholder">weui</view></view>
+        <view><view class="placeholder">weui</view></view>
+    </view>
+</view>
+    <!-- <mp-dialog title="test" show="{{true}}" bindbuttontap="tapDialogButton" buttons="{{[{text: '取消'}, {text: '确认'}]}}">
+      <view>test content</view>
+    </mp-dialog> -->
     <!-- <view class='item'>
       <view class='title'>联系开发者</view>
       <view class='i' catchtap='copy' data-title='GitHub' data-content='{{github}}'>

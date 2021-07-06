@@ -1,0 +1,22 @@
+{
+  "name": "quietweather",
+  "version": "1.0.0",
+  "description": "一款天气应用微信小程序 <p align='center'>     <img src='https://user-gold-cdn.xitu.io/2018/7/5/1646880a97f2c931?w=344&h=344&f=jpeg&s=66247'> </p>",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GranadaTeam/quietweather.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/GranadaTeam/quietweather/issues"
+  },
+  "homepage": "https://github.com/GranadaTeam/quietweather#readme",
+  "dependencies": {
+    "weui-miniprogram": "^1.0.8"
+  }
+}
