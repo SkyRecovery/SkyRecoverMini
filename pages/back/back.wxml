@@ -32,7 +32,7 @@
           </view>
         </block>
       </view>
-      <view class="go-btn">预约上门回收</view>
+      <view class="go-btn" bindtap="handleDetail">预约上门回收</view>
     </view>
     <view class="mt20"></view>
     <view class="content-box bg-ec text-center">

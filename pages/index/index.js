@@ -57,29 +57,30 @@ Page({
     searchCity: '',
     setting: {},
     bcgImgList: [
-      {
-        src: '/img/accomplishment-adventure-clear-sky-585825.jpg',
-        topColor: '#004a89'
-      },
-      {
-        src: '/img/clouds-forest-idyllic-417102.jpg',
-        topColor: '#0085e5'
-      },
+      // {
+      //   src: '/img/accomplishment-adventure-clear-sky-585825.jpg',
+      //   topColor: '#004a89'
+      // },
+      // {
+      //   src: '/img/clouds-forest-idyllic-417102.jpg',
+      //   topColor: '#0085e5'
+      // },
       {
         src: '/img/asphalt-blue-sky-clouds-490411.jpg',
         topColor: '#009ffe'
       },
-      {
-        src: '/img/aerial-climate-cold-296559.jpg',
-        topColor: '#d6d1e6'
-      },
+      // {
+      //   src: '/img/aerial-climate-cold-296559.jpg',
+      //   topColor: '#d6d1e6'
+      // },
       {
         src: '/img/beautiful-cold-dawn-547115.jpg',
         topColor: '#ffa5bc'
-      }, {
-        src: '/img/beach-bird-birds-235787.jpg',
-        topColor: '#393836'
       },
+      //  {
+      //   src: '/img/beach-bird-birds-235787.jpg',
+      //   topColor: '#393836'
+      // },
     ],
     bcgImgIndex: 0,
     bcgImg: '',
@@ -446,7 +447,7 @@ Page({
   onShareAppMessage(res) {
     let shareInfo = this.data.shareInfo
     return {
-      title: shareInfo.title || 'Freedom Weather',
+      title: shareInfo.title || '晴空环保回收',
       path: shareInfo.path || '/pages/index/index',
       imageUrl: shareInfo.imageUrl,
     }

@@ -17,6 +17,8 @@
   },
   "homepage": "https://github.com/GranadaTeam/quietweather#readme",
   "dependencies": {
+    "@miniprogram-component-plus/tabs": "^1.0.0",
+    "moment": "^2.29.1",
     "weui-miniprogram": "^1.0.8"
   }
 }

@@ -1,0 +1,37 @@
+{
+  "setting": {},
+  "condition": {
+    "plugin": {
+      "list": []
+    },
+    "game": {
+      "list": []
+    },
+    "gamePlugin": {
+      "list": []
+    },
+    "miniprogram": {
+      "list": [
+        {
+          "id": -1,
+          "name": "pages/detail/index",
+          "pathName": "pages/detail/index",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/allOrderInfo/index",
+          "pathName": "pages/allOrderInfo/index",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/orderInfo/index",
+          "pathName": "pages/orderInfo/index",
+          "query": "",
+          "scene": null
+        }
+      ]
+    }
+  }
+}

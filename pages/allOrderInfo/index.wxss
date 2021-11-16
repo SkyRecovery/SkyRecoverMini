@@ -1,0 +1,63 @@
+/* pages/orderInfo/index.wxss */
+.order-list {
+  padding: 30rpx;
+}
+
+.list-item {
+  width: 84%;
+  margin: 30rpx auto 0;
+  padding: 30rpx;
+  border-radius: 30rpx;
+  background-color: #ffffff;
+  font-size: 28rpx;
+}
+
+.list-item-box {
+  display: flex;
+  padding: 16rpx;
+  justify-content: space-between;
+  border-bottom: 1rpx solid #ececec;
+}
+
+.item-tit {
+  width: 22%;
+  color: #666;
+}
+
+.item-val {
+  width: 76%;
+  /* overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap; */
+}
+
+.weui-tabs-bar__wrp {
+  padding: 30rpx;
+}
+
+.weui-tabs-swiper {
+  height: 88vh;
+}
+
+.tab-content {
+  height: 88vh;
+  overflow-y: auto;
+}
+
+.weui-tabs-bar__content {
+  font-size: 28rpx;
+}
+
+.weui-tabs-bar__item {
+  margin-right: 20rpx;
+}
+
+.tab-bar-title__selected {
+  font-size: 36rpx;
+}
+
+.button-order {
+  display: block !important;
+  width: 200rpx;
+  margin: 20rpx auto !important;
+}

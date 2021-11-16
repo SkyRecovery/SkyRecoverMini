@@ -1,0 +1,35 @@
+<view class="page">
+
+  <mp-tabs tabs="{{tabs}}" activeTab="{{activeTab}}" swiperClass="weui-tabs-swiper" bindtabclick="onTabClick" bindchange="onChange" activeClass="tab-bar-title__selected" tab-underline-color="#0085e5">
+    <block wx:for="{{tabs}}" wx:key="title">
+      <view class="tab-content" data-set="{{item}}" slot="tab-content-{{index}}" bind:tap="handleClick">
+        <block wx:if="{{orderList.length>0}}">
+          <block wx:for="{{orderList}}" wx:key="title">
+            <view class="list-item">
+              <view class="list-item-box">
+                <view class="item-tit">您的地址</view>
+                <view class="item-val">{{item.address}}</view>
+              </view>
+              <view class="list-item-box">
+                <view class="item-tit">订单重量</view>
+                <view class="item-val">{{item.weight}}</view>
+              </view>
+              <view class="list-item-box">
+                <view class="item-tit">上门时间</view>
+                <view class="item-val">{{item.time}}</view>
+              </view>
+              <view class="list-item-box">
+                <view class="item-tit">订单时间</view>
+                <view class="item-val">{{item.create}}</view>
+              </view>
+              <button wx:if="{{item.orderStatus !=='DONE'}}" class="button-order go-btn-base" type="primary" size="mini" bindtap="handleButton" data-order-status="{{item.orderStatus}}" data-id="{{item._id}}">{{item.orderStatus}}</button>
+            </view>
+          </block>
+        </block>
+        <block wx:else>
+          <ad unit-id="adunit-a4ec392026d90b4e"></ad>
+        </block>
+      </view>
+    </block>
+  </mp-tabs>
+</view>

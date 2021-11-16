@@ -23,16 +23,16 @@ Page({
       }
     ],
     stepList: [{
-      name: '在线预约',
-      icon: '/img/new/yuyue.png'
-    },
-    {
-      name: '免费上门',
-      icon: '/img/new/shangmen.png'
-    }, {
-      name: '当场结算',
-      icon: '/img/new/jiesuan.png'
-    }
+        name: '在线预约',
+        icon: '/img/new/yuyue.png'
+      },
+      {
+        name: '免费上门',
+        icon: '/img/new/shangmen.png'
+      }, {
+        name: '当场结算',
+        icon: '/img/new/jiesuan.png'
+      }
     ],
   },
   onLoad() {
@@ -40,21 +40,21 @@ Page({
     // 在页面中定义插屏广告
 
     // 在页面onLoad回调事件中创建插屏广告实例
-    if (wx.createInterstitialAd) {
-      interstitialAd = wx.createInterstitialAd({
-        adUnitId: 'adunit-9b9f29035375b260'
-      })
-      interstitialAd.onLoad(() => {})
-      interstitialAd.onError((err) => {})
-      interstitialAd.onClose(() => {})
-    }
+    // if (wx.createInterstitialAd) {
+    //   interstitialAd = wx.createInterstitialAd({
+    //     adUnitId: 'adunit-9b9f29035375b260'
+    //   })
+    //   interstitialAd.onLoad(() => {})
+    //   interstitialAd.onError((err) => {})
+    //   interstitialAd.onClose(() => {})
+    // }
 
-    // 在适合的场景显示插屏广告
-    if (interstitialAd) {
-      interstitialAd.show().catch((err) => {
-        console.error(err)
-      })
-    }
+    // // 在适合的场景显示插屏广告
+    // if (interstitialAd) {
+    //   interstitialAd.show().catch((err) => {
+    //     console.error(err)
+    //   })
+    // }
   },
   previewImages(e) {
     let index = e.currentTarget.dataset.index || 0
@@ -103,4 +103,9 @@ Page({
       },
     })
   },
+  handleDetail() {
+    wx.navigateTo({
+      url: '/pages/detail/index',
+    })
+  }
 })

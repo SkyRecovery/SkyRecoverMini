@@ -5,12 +5,17 @@
     "pages/index/index",
     "pages/citychoose/citychoose",
     "pages/setting/setting",
-    "pages/systeminfo/systeminfo"
+    "pages/systeminfo/systeminfo",
+    "pages/detail/index",
+    "pages/user/index",
+    "pages/orderInfo/index",
+    "pages/allOrderInfo/index"
+
   ],
   "window": {
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#0085e5",
-    "navigationBarTitleText": "Freedom Weather",
+    "navigationBarTitleText": "晴空环保回收",
     "navigationBarTextStyle": "white"
   },
   "tabBar": {
@@ -18,8 +23,7 @@
     "selectedColor": "#1296db",
     "borderStyle": "white",
     "backgroundColor": "#ffffff",
-    "list": [
-      {
+    "list": [{
         "pagePath": "pages/back/back",
         "iconPath": "img/tabicon/tabicon-a1.png",
         "selectedIconPath": "img/tabicon/tabicon-b1.png",
@@ -32,7 +36,7 @@
         "text": "天气"
       },
       {
-        "pagePath": "pages/systeminfo/systeminfo",
+        "pagePath": "pages/user/index",
         "iconPath": "img/tabicon/tabicon-a3.png",
         "selectedIconPath": "img/tabicon/tabicon-b3.png",
         "text": "我的"
@@ -47,7 +51,6 @@
   "cloud": true,
   "sitemapLocation": "sitemap.json",
   "useExtendedLib": {
-    "kbone": true,
-    "weui": true
+    "kbone": true
   }
 }

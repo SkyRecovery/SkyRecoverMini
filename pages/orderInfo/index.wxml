@@ -1,0 +1,40 @@
+<view class="page">
+
+  <mp-tabs tabs="{{tabs}}" activeTab="{{activeTab}}" swiperClass="weui-tabs-swiper" bindtabclick="onTabClick" bindchange="onChange" activeClass="tab-bar-title__selected" tab-underline-color="#0085e5">
+    <block wx:for="{{tabs}}" wx:key="title">
+      <view class="tab-content" data-set="{{item}}" slot="tab-content-{{index}}" bind:tap="handleClick">
+        <!-- <scroll-view scroll-y="true" style="height: 88vh;"
+         bindscrolltolower="handleLower"
+         > -->
+        <block wx:if="{{orderList.length>0}}">
+
+          <block wx:for="{{orderList}}" wx:key="title">
+            <view class="list-item">
+              <view class="list-item-box">
+                <view class="item-tit">您的地址</view>
+                <view class="item-val">{{item.address}}</view>
+              </view>
+              <view class="list-item-box">
+                <view class="item-tit">订单重量</view>
+                <view class="item-val">{{item.weight}}</view>
+              </view>
+              <view class="list-item-box">
+                <view class="item-tit">上门时间</view>
+                <view class="item-val">{{item.time}}</view>
+              </view>
+              <view class="list-item-box">
+                <view class="item-tit">订单时间</view>
+                <view class="item-val">{{item.create}}</view>
+              </view>
+            </view>
+          </block>
+        </block>
+        <block wx:else>
+          <button type="primary" class="empty-btn go-btn-base" bindtap="handleClickButton">快去预约上门吧～</button>
+          <ad unit-id="adunit-a4ec392026d90b4e"></ad>
+        </block>
+        <!-- </scroll-view> -->
+      </view>
+    </block>
+  </mp-tabs>
+</view>

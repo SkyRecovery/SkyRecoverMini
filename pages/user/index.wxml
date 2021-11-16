@@ -1,0 +1,28 @@
+<!--pages/user/index.wxml-->
+<view class="page">
+  <view class="user-container">
+    <view class="user-avatar">
+      <block wx:if="{{islogin}}">
+        <image class="user-img ma" src="../../img/new/qinglang.png"></image>
+        <!-- <button class="user-name mt20" open-type='getUserInfo' plain="true" type="default" bindgetuserinfo="handleUserInfo">授权使用</button> -->
+        <button class="user-name mt20" plain="true" type="default" bindtap="handleUserInfo">授权使用</button>
+      </block>
+      <block wx:else>
+        <image class="user-img ma" src="{{userData.avatarUrl}}"></image>
+        <view class="user-name mt20">{{userData.nickName}}</view>
+      </block>
+    </view>
+  </view>
+
+  <view class="page__bd">
+    <mp-cells>
+      <mp-cell link bindtap="handleOrderInfo">
+        <view style="display: inline-block; vertical-align: middle">我的订单</view>
+      </mp-cell>
+      <mp-cell wx:if="{{userData.role === 'admin'}}" link bindtap="handleAllOrderInfo">
+        <view style="display: inline-block; vertical-align: middle">我的待收</view>
+      </mp-cell>
+    </mp-cells>
+  </view>
+  <ad unit-id="adunit-a4ec392026d90b4e"></ad>
+</view>
