@@ -8,14 +8,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/GranadaTeam/quietweather.git"
+    "url": "git+https://github.com/SkyRecovery/SkyRecoverMini.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/GranadaTeam/quietweather/issues"
+    "url": "https://github.com/SkyRecovery/SkyRecoverMini/issues"
   },
-  "homepage": "https://github.com/GranadaTeam/quietweather#readme",
+  "homepage": "https://github.com/SkyRecovery/SkyRecoverMini#readme",
   "dependencies": {
     "@miniprogram-component-plus/tabs": "^1.0.0",
     "moment": "^2.29.1",
