@@ -1,9 +1,62 @@
+@import 'miniprogram_npm/weui-miniprogram/weui-wxss/dist/style/weui.wxss';
+
 Page {
   background: #f4f6f9;
 }
+
 ::-webkit-scrollbar {
   display: none;
 }
+
 .iphonex-padding {
   padding-bottom: 68rpx;
+}
+
+.mt20 {
+  margin-top: 20rpx;
+}
+
+.mb20 {
+  margin-bottom: 20rpx;
+}
+
+.mb40 {
+  margin-bottom: 40rpx;
+}
+
+.ma {
+  margin: 0 auto;
+}
+
+.bg-ec {
+  background: #ececec;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.fs40 {
+  font-size: 40rpx;
+  font-weight: 600;
+}
+
+.bg-blue {
+  background: #0085e5;
+}
+
+.bg-fff {
+  background: #fff;
+}
+
+.empty-btn {
+  width: 60%;
+  display: block !important;
+  margin: 130rpx auto;
+}
+
+.go-btn-base {
+  background: #0085e5 !important;
+  color: #fff;
+  border-radius: 60rpx;
 }

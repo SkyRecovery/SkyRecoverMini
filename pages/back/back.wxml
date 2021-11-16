@@ -1,0 +1,42 @@
+<view class='about'>
+  <view class='content'>
+    <swiper indicator-color='#666666' indicator-active-color='#40a7e7' indicator-dots="true" autoplay="true" circular="true" interval="5000" duration="300" previous-margin="0px" next-margin="0px">
+      <block wx:for="{{bannerImgList}}" wx:key="index">
+        <swiper-item>
+          <view class='info' data-index='index' catchtap='previewImages'>
+            <ad unit-id="adunit-a4ec392026d90b4e"></ad>
+          </view>
+        </swiper-item>
+      </block>
+    </swiper>
+    <view class="weui-flex content-box">
+      <block wx:for="{{itemList}}" wx:key="index">
+        <view class="weui-flex__item type-box">
+          <image class="type-img" src="{{item.icon}}"></image>
+          <view class="placeholder">{{item.name}}</view>
+        </view>
+      </block>
+    </view>
+    <view class="mt20"></view>
+    <view class="content-box">
+      <view class="weui-flex">
+        <block wx:for="{{stepList}}" wx:key="index">
+          <view class="weui-flex__item step-box">
+            <image class="step-img" src="{{item.icon}}"></image>
+            <view>
+              step {{index+1}}
+            </view>
+            <view>
+              {{item.name}}
+            </view>
+          </view>
+        </block>
+      </view>
+      <view class="go-btn" bindtap="handleDetail">预约上门回收</view>
+    </view>
+    <view class="mt20"></view>
+    <view class="content-box bg-ec text-center">
+      <view class="gradient fs40 ">环保有你，晴空万里。</view>
+    </view>
+  </view>
+</view>

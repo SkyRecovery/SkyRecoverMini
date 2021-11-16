@@ -1,0 +1,28 @@
+/* pages/user/index.wxss */
+.user-container {
+  padding: 10px;
+  background: linear-gradient(to right, #00ffff, #1a1aff);
+  /* -webkit-background-clip: text; */
+  /* color: transparent; */
+  /* height: 210rpx; */
+}
+
+.user-avatar {
+  width: 200rpx;
+  /* background: red; */
+  font-size: 24rpx;
+  margin: 40rpx auto;
+}
+
+.user-name {
+  font-size: 24rpx;
+  text-align: center;
+
+}
+
+.user-img {
+  width: 120rpx;
+  height: 120rpx;
+  border-radius: 50px;
+  display: block;
+}

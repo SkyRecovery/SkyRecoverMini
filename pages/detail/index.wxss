@@ -1,0 +1,57 @@
+/* pages/detail/index.wxss */
+
+.detail-box {
+  width: 100%;
+  height: 100vh;
+}
+
+.detail-content {
+  padding: 40rpx;
+}
+
+.detail-banner {
+  padding: 30rpx;
+}
+
+.type-img {
+  width: 100rpx;
+  height: 100rpx;
+  display: block;
+  margin: 0 auto;
+}
+
+.content-box {
+  border-radius: 20rpx;
+  padding: 20rpx;
+  margin: -100rpx 0 40rpx 0;
+
+  font-size: 28rpx;
+  color: #999;
+  box-shadow: 0 0 30rpx #ccc;
+}
+
+.title-text {
+  font-size: 34rpx;
+  color: #000;
+  font-weight: 600;
+  margin-bottom: 20rpx;
+}
+
+.content-form {
+  border-radius: 20rpx;
+  padding: 20rpx;
+  box-shadow: 0 0 30rpx #ccc;
+}
+
+.banner-img {
+  width: 280rpx;
+  height: 280rpx;
+  display: block;
+  margin: 0 auto;
+}
+
+.get-addr {
+  border-radius: 50rpx;
+  margin: 20rpx auto;
+  font-size: 28rpx;
+}

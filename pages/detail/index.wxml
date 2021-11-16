@@ -1,0 +1,50 @@
+<!--pages/detail/index.wxml-->
+<view class="detail-box">
+  <mp-toptips msg="{{error}}" type="error" show="{{error}}"></mp-toptips>
+  <view class="detail-banner bg-blue">
+    <image class="banner-img" src="/img/new/xiangzi.png"></image>
+  </view>
+  <view class="detail-content">
+    <view class="content-box bg-fff ">
+      <view class="title-text">回收类别</view>
+      <view class="weui-flex">
+        <block wx:for="{{itemList}}" wx:key="index">
+          <view class="weui-flex__item type-box text-center">
+            <image class="type-img" src="{{item.icon}}"></image>
+            <view class="placeholder">{{item.name}}</view>
+          </view>
+        </block>
+      </view>
+    </view>
+    <view class="page__bd content-form bg-fff mt20 mb40">
+      <view class="title-text">地址信息</view>
+      <mp-form id="form" rules="{{rules}}" models="{{formData}}">
+        <mp-cells>
+          <mp-cell title="地址信息" ext-class="weui-cell_vcode">
+            <button slot="footer" bindtap="chooseAddress" type="primary" class="get-addr go-btn-base">获取地址</button>
+          </mp-cell>
+          <mp-cell>
+            <textarea class="weui-textarea" prop="address" placeholder="请点击按钮获取地址" disabled='true' value="{{address}}" style="height: 5.3em" maxlength="200" />
+          </mp-cell>
+          <mp-cell prop="time" title="上门时间" ext-class="weui-cell_vcode">
+            <picker mode="multiSelector" bindchange="bindTimeChange" value="{{itemsTimeIndex}}" range="{{itemsTime}}">
+              <view class="weui-select weui-select_in-select-after">
+                {{itemsTime[0][itemsTimeIndex]}} {{itemsTime[1][itemsTimeInner]}}
+              </view>
+            </picker>
+          </mp-cell>
+          <mp-cell prop="weight" title="预估重量" ext-class="weui-cell_vcode">
+            <picker bindchange="bindWeightChange" value="{{itemIndex}}" range="{{items}}" range-key='value'>
+              <view class="weui-select weui-select_in-select-after">
+                {{items[itemIndex].value}}
+              </view>
+            </picker>
+          </mp-cell>
+        </mp-cells>
+      </mp-form>
+    </view>
+    <view>
+      <button class="go-btn-base" type="primary" bindtap="submitForm">确定</button>
+    </view>
+  </view>
+</view>
