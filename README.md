@@ -16,4 +16,8 @@
 > * [注册微信小程序](https://mp.weixin.qq.com/wxopen/waregister?action=step1)，获取 `appid`，配置域名白名单(在小程序后台将使用到的 `API` 添加到域名白名单)；
 
 
+## 小程序码
 
+扫码体验小程序
+
+- [小程序](../img/qrcode.jpeg)
