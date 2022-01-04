@@ -20,4 +20,4 @@
 
 扫码体验小程序
 
-- [小程序](../img/qrcode.jpeg)
+![image](/img/qrcode.jpeg)
