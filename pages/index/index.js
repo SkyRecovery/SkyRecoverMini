@@ -559,4 +559,10 @@ Page({
       animationFour: animationFour.export(),
     })
   },
+  onShareTimeline() {
+    // return {
+    //   title: '晴空环保回收',
+    //   path: '/pages/back/back',
+    // }
+  }
 })

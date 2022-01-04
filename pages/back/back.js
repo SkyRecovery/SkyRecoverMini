@@ -66,8 +66,8 @@ Page({
     wx.previewImage({
       current: arr[index],
       urls: arr,
-      success: function(res) {},
-      fail: function(res) {
+      success: function (res) {},
+      fail: function (res) {
         console.error('previewImage fail: ', res)
       }
     })
@@ -107,5 +107,18 @@ Page({
     wx.navigateTo({
       url: '/pages/detail/index',
     })
+  },
+  onShareAppMessage(res) {
+    // return {
+    //   title: '晴空环保回收',
+    //   path: '/pages/back/back',
+
+    // }
+  },
+  onShareTimeline() {
+    // return {
+    //   title: '晴空环保回收',
+    //   path: '/pages/back/back',
+    // }
   }
 })

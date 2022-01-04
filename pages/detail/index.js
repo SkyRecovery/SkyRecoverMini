@@ -70,7 +70,7 @@ Page({
     formData: {
 
     },
-    userInfo: wx.getStorageSync('UserInfo'),
+    userInfo: {},
     // [{
     //     name: '10',
     //     value: '5-10kg'
@@ -106,6 +106,7 @@ Page({
       itemsTime: arr,
       ['formData.time']: `${arr[0][0]}-${arr[1][1]}`,
       ['formData.weight']: data[0].value,
+      userInfo: wx.getStorageSync('UserInfo'),
     })
 
     // wx.cloud.callFunction({

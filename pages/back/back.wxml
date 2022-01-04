@@ -1,6 +1,6 @@
 <view class='about'>
   <view class='content'>
-    <swiper indicator-color='#666666' indicator-active-color='#40a7e7' indicator-dots="true" autoplay="true" circular="true" interval="5000" duration="300" previous-margin="0px" next-margin="0px">
+    <swiper indicator-color='#666666' indicator-active-color='#40a7e7' indicator-dots="true" autoplay="true" circular="true" interval="30000" duration="300" previous-margin="0px" next-margin="0px">
       <block wx:for="{{bannerImgList}}" wx:key="index">
         <swiper-item>
           <view class='info' data-index='index' catchtap='previewImages'>
